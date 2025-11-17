@@ -1,8 +1,8 @@
 package com.webapp.usermanagementservice.controller;
 
+import com.webapp.usermanagementservice.dto.StatusUpdateRequest;
 import com.webapp.usermanagementservice.dto.UserRequest;
 import com.webapp.usermanagementservice.dto.UserResponse;
-import com.webapp.usermanagementservice.model.enums.Status;
 import com.webapp.usermanagementservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -47,9 +47,8 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserResponse> updateStatus(@PathVariable Long id,@Valid @RequestBody Status status){
+    public ResponseEntity<UserResponse> updateStatus(@PathVariable Long id,@Valid @RequestBody StatusUpdateRequest status){
         return ResponseEntity.ok(userService.updateStatus(id,status));
     }
-
 
 }
