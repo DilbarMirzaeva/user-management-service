@@ -1,15 +1,22 @@
 FROM gradle:8.7-jdk17 AS build
 WORKDIR /app
 
-COPY build.gradle settings.gradle gradlew ./
-COPY gradle ./gradle
-
-# burda gradlew-ə icazə veririk
+# Əvvəlcə gradlew-ı copy et və icazə ver
+COPY gradlew ./
 RUN chmod +x gradlew
 
+# Sonra build.gradle və settings.gradle
+COPY build.gradle settings.gradle ./
+
+COPY gradle ./gradle
+
+# Dependencies
 RUN ./gradlew dependencies --no-daemon
 
+# Sonra qalan kodu copy et
 COPY . .
+
+# BootJar build
 RUN ./gradlew bootJar --no-daemon
 
 FROM eclipse-temurin:17-jdk
