@@ -1,20 +1,19 @@
 FROM gradle:8.7-jdk17 AS build
 WORKDIR /app
 
-# Əvvəlcə gradlew-ı copy et və icazə ver
-COPY gradlew ./
-RUN chmod +x gradlew
-
-# Sonra build.gradle və settings.gradle
+# Build.gradle və settings.gradle copy et
 COPY build.gradle settings.gradle ./
-
 COPY gradle ./gradle
 
 # Dependencies
-RUN ./gradlew dependencies --no-daemon
+RUN gradle dependencies --no-daemon
 
 # Sonra qalan kodu copy et
 COPY . .
+
+# Gradlew-ı ayrıca copy et və icazə ver
+COPY gradlew ./
+RUN chmod +x gradlew
 
 # BootJar build
 RUN ./gradlew bootJar --no-daemon
