@@ -1,49 +1,40 @@
 # User Management Service
 
-A Spring Boot REST API for managing users with CRUD operations, status management, and AOP-based logging.
+## Project Overview
+**User Management Service** is a Spring Boot backend application that manages user data through RESTful APIs. The service includes CRUD operations, status updates, DTO mapping, exception handling, and database integration. It is deployed on **Render** using Docker.
 
----
+### Key Features
+- CRUD operations for users
+- Update user status (active/inactive)
+- DTO mapping using MapStruct
+- AOP-based logging
+- Global exception handling
+- Unit testing
+- PostgreSQL integration
+- Dockerized deployment
 
-## Features
-
-- Create, Read, Update, Delete users (soft delete)
-- Update user status (ACTIVE, INACTIVE, DELETED)
-- Validate user input (email, phone, date of birth)
-- MapStruct DTO mapping
-- **AOP-based logging** for service method execution and parameters
-- Unit tests with JUnit 5 + Mockito
-- PostgreSQL database integration
-- Dockerized application for easy deployment
-
----
-
-## Tech Stack
-
+### Technologies Used
 - Java 17
-- Spring Boot 3
-- Spring Data JPA
+- Spring Boot 3.2
+- Spring Data JPA / Hibernate
 - PostgreSQL
 - MapStruct
-- Spring AOP
-- JUnit 5 & Mockito
 - Docker & Docker Compose
+- JUnit 5
+- Lombok
+- Gradle
+- Render (Deployment)
 
----
+## API Endpoints
 
-## Getting Started
+Base URL: `/api/v1/users`
 
-### Prerequisites
+| HTTP Method | Endpoint            | Description                       | Request Body |
+|------------|-------------------|----------------------------------|--------------|
+| POST       | `/save`            | Create a new user                | `UserRequest` JSON |
+| GET        | `/all`             | Get all users                     | - |
+| GET        | `/{id}`            | Get a user by ID                  | - |
+| PUT        | `/{id}`            | Update a user by ID               | `UserRequest` JSON |
+| DELETE     | `/{id}`            | Delete a user by ID               | - |
+| PATCH      | `/{id}`            | Update a user's status            | `StatusUpdateRequest` JSON |
 
-- Java 17+
-- Maven or Gradle
-- Docker & Docker Compose
-
----
-
-### Running Locally with Docker
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/DilbarMirzaeva/user-management-service.git
-cd user-management-service
