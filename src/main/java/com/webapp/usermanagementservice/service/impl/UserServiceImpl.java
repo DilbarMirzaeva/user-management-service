@@ -1,5 +1,6 @@
 package com.webapp.usermanagementservice.service.impl;
 
+import com.webapp.usermanagementservice.dto.StatusUpdateRequest;
 import com.webapp.usermanagementservice.dto.UserRequest;
 import com.webapp.usermanagementservice.dto.UserResponse;
 import com.webapp.usermanagementservice.exception.AlreadyExistsException;
@@ -38,8 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponse> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toDto).collect(Collectors.toList());
+        return userRepository.findByStatus(Status.ACTIVE).stream()
+                .map(userMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     //avoid repetition
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse updateUser(Long id, UserRequest request) {
         User user=findUserById(id);
         userMapper.updateUser(request,user);
+        userRepository.save(user);
         return userMapper.toDto(user);
     }
 
@@ -66,12 +69,14 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long id) {
         User user=findUserById(id);
         user.setStatus(Status.DELETED);
+        userRepository.save(user);
     }
 
     @Override
-    public UserResponse updateStatus(Long id, Status status) {
+    public UserResponse updateStatus(Long id, StatusUpdateRequest status) {
         User user=findUserById(id);
-        user.setStatus(status);
+        user.setStatus(status.getStatus());
+        userRepository.save(user);
         return userMapper.toDto(user);
     }
 }
