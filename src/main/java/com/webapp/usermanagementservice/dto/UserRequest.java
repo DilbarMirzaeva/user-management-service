@@ -19,7 +19,7 @@ public class UserRequest {
     private String email;
 
     @Pattern(
-            regexp = "^[0-9]{10,15}$",
+            regexp = "^[0-9]{8,15}$",
             message = "Phone must contain only digits (10–15 length)"
     )
     private String phone;
